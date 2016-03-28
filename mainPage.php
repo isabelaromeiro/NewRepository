@@ -266,11 +266,11 @@
 		<aside>
 			<ul>
 				<li class='menuTitle'>Categories</li>
-				<li><a href='categories/books.php'>Books</a></li>
-				<li><a href='categories/electronics.php'>Electronics</a></li>
-				<li><a href='categories/furniture.php'>Furniture</a></li>
-				<li><a href='categories/games.php'>Games</a></li>
-				<li><a href='categories/homeandkitchen.php'>Home & Kitchen</a></li>
+				<li><a href='books.php'>Books</a></li>
+				<li><a href='electronics.php'>Electronics</a></li>
+				<li><a href='furniture.php'>Furniture</a></li>
+				<li><a href='games.php'>Games</a></li>
+				<li><a href='homeandkitchen.php'>Home & Kitchen</a></li>
 			</ul>
 		</aside>
 		<p class='mostRecent'>Most Recents</p>
@@ -305,6 +305,25 @@
 				<ul>
 					<li class='top'>$30.00</li>
 					<li>03/26/2016</li>
+				</ul>	
+			</div>
+		</div>
+		<div class='product'>
+			<div class='img'>
+				<a href='productPage.php'>
+					<img class='productImage' src='http://i.kinja-img.com/gawker-media/image/upload/s--7WEGP3rN--/18erfmauko2vrjpg.jpg' alt='Book'/>
+				</a>
+			</div>
+			<div class='left'>
+				<ul>
+					<li class='top'>Old Book</li>
+					<li>Books</li>
+				</ul>
+			</div>	
+			<div class='right'>
+				<ul>
+					<li class='top'>$5.00</li>
+					<li>03/15/2016</li>
 				</ul>	
 			</div>
 		</div>
