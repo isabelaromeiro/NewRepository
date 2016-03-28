@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang = 'eng'>
 	<head>
-		<title>Radford Yard Sale</title>
+		<title>Main Page - Radford Yard Sale</title>
 		<meta charset = 'utf-8' />
 		<style type="text/css">
 
@@ -43,6 +43,8 @@
 			border-radius: 10em;
 			font-size: 100%;
 			position: relative;
+			float: left;
+			margin-top: 5px;
 		}
 
 		.search-name {
@@ -50,6 +52,7 @@
 			display: inline-block;
 			margin-top: 5px;
 			margin-right: 10px;
+			width: 550px;
 		}
 
 		.menu {
@@ -59,6 +62,7 @@
 			margin-left: 30px;
 			margin-right: 10px;
 			z-index: 1;
+			float: right;
 		}
 
 		.menu:hover {
@@ -187,6 +191,7 @@
 			margin-top: -100px;
 			margin-right: 150px;
 			max-height: auto;
+			width: 300px;
 		}
 
 		.right {
@@ -219,34 +224,34 @@
 		}
 		/*End of footer CSS*/
 		</style>
-
-		<link rel="stylesheet" type="text/css" href="static/bootstrap/css/bootstrap.css">
-
 		<script type="text/javascript">
 
 
 		</script>
 	</head>
 	<body>
-		<nav class="col-md-12">
-			<img class='logo' src="http://imageshack.com/a/img923/1980/De7xLd.png" alt='Logo'>
+		<nav>
+			<a href='mainPage.php'>
+				<img class='logo' src="http://imageshack.com/a/img923/1980/De7xLd.png" alt='Logo'>
+			</a>
 			<div class='search-name'>
-				<input type='search' id='searchbox' name='search' placeholder='Search'/>
+				<form class='searchform' action='search.php'>
+					<input type='search' id='searchbox' name='search' placeholder='Search'/>
+				</form>
 				<ul id='menu' class='menu'>
 					<li>
 						<?php
-							// $conn = mysqli_connect('localhost', 'proj6', 'brasil2016', 'proj6');
-							// if (!$conn ){
-							// 	echo 'erro';
-							// }
-							// $email = $_POST['email'];
-							// $result = mysqli_query($conn, "SELECT name FROM user WHERE email = '$email'");
-							// if (!$result) {
-							//     echo 'Could not run query: ' . mysql_error();
-							//     exit;
-							// }
-							// $row = mysqli_fetch_row($result);
-							// echo $row[0];
+							$conn = mysqli_connect('localhost', 'proj6', 'brasil2016', 'proj6');
+							if (!$conn ){
+								echo 'erro';
+							}
+							$result = mysqli_query($conn, "SELECT name FROM user WHERE email = 'tanna@email.com'");
+							if (!$result) {
+							    echo 'Could not run query: ' . mysql_error();
+							    exit;
+							}
+							$row = mysqli_fetch_row($result);
+							echo $row[0];
 							?> &#9662;</li>
 					<div class='content'>
 						<ul>
@@ -258,3 +263,23 @@
 				</ul>
 			</div>
 		</nav>
+		<aside>
+			<ul>
+				<li class='menuTitle'>Categories</li>
+				<li><a href='books.php'>Books</a></li>
+				<li><a href='electronics.php'>Electronics</a></li>
+				<li><a href='furniture.php'>Furniture</a></li>
+				<li><a href='games.php'>Games</a></li>
+				<li><a href='homeandkitchen.php'>Home & Kitchen</a></li>
+			</ul>
+		</aside>
+		<p class='mostRecent'>Games</p>
+		
+			
+
+		<footer>
+			<p>Radford Yard Sale | 2016</p>
+			<p>Contact us: <a href='mailto:radfordyarsale@gmail.com'>radfordyardsale@gmail.com</a></p>
+		</footer>
+	</body>
+</html>
