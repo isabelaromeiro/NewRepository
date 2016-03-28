@@ -226,11 +226,25 @@
 	</head>
 	<body>
 		<nav>
-			<img class='logo' src="http://imageshack.com/a/im g923/1980/De7xLd.png" alt='Logo'>
+			<img class='logo' src="http://imageshack.com/a/img923/1980/De7xLd.png" alt='Logo'>
 			<div class='search-name'>
 				<input type='search' id='searchbox' name='search' placeholder='Search'/>
 				<ul id='menu' class='menu'>
-					<li>First Name &#9662;</li>
+					<li>
+						<?php
+							$conn = mysqli_connect('localhost', 'proj6', 'brasil2016', 'proj6');
+							if (!$conn ){
+								echo 'erro';
+							}
+							$email = $_POST['email'];
+							$result = mysqli_query($conn, "SELECT name FROM user WHERE email = '$email'");
+							if (!$result) {
+							    echo 'Could not run query: ' . mysql_error();
+							    exit;
+							}
+							$row = mysqli_fetch_row($result);
+							echo $row[0];
+							?> &#9662;</li>
 					<div class='content'>
 						<ul>
 							<li><a href="announce.php">Announce</a></li>
