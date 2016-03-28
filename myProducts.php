@@ -262,16 +262,6 @@
 				</ul>
 			</div>
 		</nav>
-		<!-- <aside>
-			<ul>
-				<li class='menuTitle'>Categories</li>
-				<li><a href='books.php'>Books</a></li>
-				<li><a href='electronics.php'>Electronics</a></li>
-				<li><a href='furniture.php'>Furniture</a></li>
-				<li><a href='games.php'>Games</a></li>
-				<li><a href='homesekitchen.php'>Home & Kitchen</a></li>
-			</ul>
-		</aside> -->
 		<p class='mostRecent'>My Products</p>
 		<div class='product'>
 			<div class='img'>
