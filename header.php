@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang = 'eng'>
 	<head>
-		<title>Main Page - Radford Yard Sale</title>
+		<title>Radford Yard Sale</title>
 		<meta charset = 'utf-8' />
 		<style type="text/css">
 
@@ -219,31 +219,34 @@
 		}
 		/*End of footer CSS*/
 		</style>
+
+		<link rel="stylesheet" type="text/css" href="static/bootstrap/css/bootstrap.css">
+
 		<script type="text/javascript">
 
 
 		</script>
 	</head>
 	<body>
-		<nav>
+		<nav class="col-md-12">
 			<img class='logo' src="http://imageshack.com/a/img923/1980/De7xLd.png" alt='Logo'>
 			<div class='search-name'>
 				<input type='search' id='searchbox' name='search' placeholder='Search'/>
 				<ul id='menu' class='menu'>
 					<li>
 						<?php
-							$conn = mysqli_connect('localhost', 'proj6', 'brasil2016', 'proj6');
-							if (!$conn ){
-								echo 'erro';
-							}
-							$email = $_POST['email'];
-							$result = mysqli_query($conn, "SELECT name FROM user WHERE email = '$email'");
-							if (!$result) {
-							    echo 'Could not run query: ' . mysql_error();
-							    exit;
-							}
-							$row = mysqli_fetch_row($result);
-							echo $row[0];
+							// $conn = mysqli_connect('localhost', 'proj6', 'brasil2016', 'proj6');
+							// if (!$conn ){
+							// 	echo 'erro';
+							// }
+							// $email = $_POST['email'];
+							// $result = mysqli_query($conn, "SELECT name FROM user WHERE email = '$email'");
+							// if (!$result) {
+							//     echo 'Could not run query: ' . mysql_error();
+							//     exit;
+							// }
+							// $row = mysqli_fetch_row($result);
+							// echo $row[0];
 							?> &#9662;</li>
 					<div class='content'>
 						<ul>
