@@ -235,7 +235,7 @@
 				<img class='logo' src="http://imageshack.com/a/img923/1980/De7xLd.png" alt='Logo'>
 			</a>
 			<div class='search-name'>
-				<form class='searchform' action='search.php'>
+				<form action='search.php'>
 					<input type='search' id='searchbox' name='search' placeholder='Search'/>
 				</form>
 				<ul id='menu' class='menu'>
@@ -270,10 +270,10 @@
 				<li><a href='electronics.php'>Electronics</a></li>
 				<li><a href='furniture.php'>Furniture</a></li>
 				<li><a href='games.php'>Games</a></li>
-				<li><a href='homeandkitchen.php'>Home & Kitchen</a></li>
+				<li><a href='homesekitchen.php'>Home & Kitchen</a></li>
 			</ul>
 		</aside>
-		<p class='mostRecent'>Most Recents</p>
+		<p class='mostRecent'>Search results for "microwave"</p>
 		<div class='product'>
 			<div class='img'>
 				<img class='productImage' src='http://imageshack.com/a/img922/3029/r6oeNE.jpg' alt='Microwave'/>
@@ -291,23 +291,7 @@
 				</ul>	
 			</div>
 		</div>
-		<div class='product'>
-			<div class='img'>
-				<img class='productImage' src='http://imageshack.com/a/img922/2083/z9l0Eh.jpg' alt='Book'/>
-			</div>
-			<div class='left'>
-				<ul>
-					<li class='top'>Programming the World Wide Web (8th Edition) - Used</li>
-					<li>Books</li>
-				</ul>
-			</div>	
-			<div class='right'>
-				<ul>
-					<li class='top'>$30.00</li>
-					<li>03/26/2016</li>
-				</ul>	
-			</div>
-		</div>
+		
 
 		<footer>
 			<p>Radford Yard Sale | 2016</p>

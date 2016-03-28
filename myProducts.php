@@ -43,8 +43,6 @@
 			border-radius: 10em;
 			font-size: 100%;
 			position: relative;
-			float: left;
-			margin-top: 5px;
 		}
 
 		.search-name {
@@ -52,7 +50,6 @@
 			display: inline-block;
 			margin-top: 5px;
 			margin-right: 10px;
-			width: 550px;
 		}
 
 		.menu {
@@ -62,7 +59,6 @@
 			margin-left: 30px;
 			margin-right: 10px;
 			z-index: 1;
-			float: right;
 		}
 
 		.menu:hover {
@@ -136,8 +132,10 @@
 
 		/*CSS for the article*/
 		.mostRecent {
+			position: relative;
 			font-size: 18px;
-			float: right;
+			left: 50%;
+			margin-left: -375px;
 			background-color: #ddd;
 			margin-top: 10px;
 			width: 750px;
@@ -146,8 +144,10 @@
 		}
 
 		.product {
+			position: relative;
 			font-size: 18px;
-			float: right;
+			left: 50%;
+			margin-left: -375px;
 			background-color: #f6f6f6;
 			width: 750px;
 			padding: 10px;
@@ -202,6 +202,7 @@
 		}
 
 		.top {
+			margin-top: 10px;
 			margin-bottom: 60px;
 		}
 
@@ -235,9 +236,7 @@
 				<img class='logo' src="http://imageshack.com/a/img923/1980/De7xLd.png" alt='Logo'>
 			</a>
 			<div class='search-name'>
-				<form class='searchform' action='search.php'>
-					<input type='search' id='searchbox' name='search' placeholder='Search'/>
-				</form>
+				<input type='search' id='searchbox' name='search' placeholder='Search'/>
 				<ul id='menu' class='menu'>
 					<li>
 						<?php
@@ -263,17 +262,17 @@
 				</ul>
 			</div>
 		</nav>
-		<aside>
+		<!-- <aside>
 			<ul>
 				<li class='menuTitle'>Categories</li>
 				<li><a href='books.php'>Books</a></li>
 				<li><a href='electronics.php'>Electronics</a></li>
 				<li><a href='furniture.php'>Furniture</a></li>
 				<li><a href='games.php'>Games</a></li>
-				<li><a href='homeandkitchen.php'>Home & Kitchen</a></li>
+				<li><a href='homesekitchen.php'>Home & Kitchen</a></li>
 			</ul>
-		</aside>
-		<p class='mostRecent'>Most Recents</p>
+		</aside> -->
+		<p class='mostRecent'>My Products</p>
 		<div class='product'>
 			<div class='img'>
 				<img class='productImage' src='http://imageshack.com/a/img922/3029/r6oeNE.jpg' alt='Microwave'/>
@@ -285,6 +284,7 @@
 				</ul>
 			</div>	
 			<div class='right'>
+				<label class='soldCheckbox'><input type='checkbox' value='sold'/> Sold</label>
 				<ul>
 					<li class='top'>$50.00</li>
 					<li>03/27/2016</li>
@@ -298,13 +298,14 @@
 			<div class='left'>
 				<ul>
 					<li class='top'>Programming the World Wide Web (8th Edition) - Used</li>
-					<li>Books</li>
+					<li>Category</li>
 				</ul>
 			</div>	
 			<div class='right'>
+				<label class='soldCheckbox'><input type='checkbox' value='sold'/> Sold</label>
 				<ul>
-					<li class='top'>$30.00</li>
-					<li>03/26/2016</li>
+					<li class='top'>Price</li>
+					<li>Date Posted</li>
 				</ul>	
 			</div>
 		</div>
