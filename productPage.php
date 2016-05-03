@@ -1,4 +1,5 @@
 <?php include_once('header.php') ?>
+<?php include_once('constants.php') ?>
 
 <div class="row">
 	<div class="page-header">
@@ -86,5 +87,7 @@
     </div>
   </div>
 </div>
+
+
 
 <?php include_once('footer.php') ?>

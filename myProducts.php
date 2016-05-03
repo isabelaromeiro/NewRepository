@@ -263,6 +263,14 @@
 			</div>
 		</nav>
 		<p class='mostRecent'>My Products</p>
+
+		<?php 
+			<?php
+			$results = retrieve_info('category');
+			// $row = $result->fetch_array(MYSQLI_ASSOC);
+			echo(dropdown($results,"category", true));
+		?>
+		 ?>
 		<div class='product'>
 			<div class='img'>
 				<img class='productImage' src='http://imageshack.com/a/img922/3029/r6oeNE.jpg' alt='Microwave'/>

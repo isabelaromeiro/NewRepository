@@ -1,3 +1,5 @@
+<?php include_once('constants.php') ?>
+<?php include_once('utils.php') ?>
 <!DOCTYPE html>
 <html lang = 'eng'>
 	<head>
@@ -241,7 +243,7 @@
 				<ul id='menu' class='menu'>
 					<li>
 						<?php
-							$conn = mysqli_connect('localhost', 'proj6', 'brasil2016', 'proj6');
+							$conn = mysqli_connect(SERVERNAME, USERNAME, PASSWORD, DBNAME);
 							if (!$conn ){
 								echo 'erro';
 							}
@@ -274,7 +276,13 @@
 			</ul>
 		</aside>
 		<p class='mostRecent'>Most Recents</p>
-		<div class='product'>
+
+		<?php
+			$results = get_all_products();
+			// $row = $result->fetch_array(MYSQLI_ASSOC);
+			echo(products($results));
+		?>
+		<!-- <div class='product'>
 			<div class='img'>
 				<img class='productImage' src='http://imageshack.com/a/img922/3029/r6oeNE.jpg' alt='Microwave'/>
 			</div>
@@ -327,7 +335,7 @@
 				</ul>	
 			</div>
 		</div>
-
+ -->
 		<footer>
 			<p>Radford Yard Sale | 2016</p>
 			<p>Contact us: <a href='mailto:radfordyarsale@gmail.com'>radfordyardsale@gmail.com</a></p>

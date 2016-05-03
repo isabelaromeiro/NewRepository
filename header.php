@@ -1,3 +1,6 @@
+<?php include_once('constants.php') ?>
+<?php include_once('utils.php') ?>
+
 <!DOCTYPE html>
 <html lang = 'eng'>
 	<head>
@@ -238,7 +241,7 @@
 				<ul id='menu' class='menu'>
 					<li>
 						<?php
-							$conn = mysqli_connect('localhost', 'proj6', 'brasil2016', 'proj6');
+							$conn = mysqli_connect(SERVERNAME, USERNAME, PASSWORD, DBNAME);
 							if (!$conn ){
 								echo 'erro';
 							}
