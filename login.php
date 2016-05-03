@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang = 'eng'>
 	<head>
-		<title>Forgot Password - Radford Yard Sale</title>
+		<title>Radford Yard Sale</title>
 		<meta charset = 'utf-8' />
 		<link rel="stylesheet" href="login-style.css"/>
 	</head>
@@ -9,12 +9,13 @@
 		<div id='login'>
 			<div id='loginFields'>
 				<p id='title'>Radford Yard Sale</p>
-				<form action='loginPageHandler.php' method='post'>
-					<p id='helpText'>Enter your e-mail to recover your password.</p>
+				<form action='login-handler.php' method='post'>
 					<input class='field' type='text' name='email' placeholder='Email Address' /><br/>
-					<input class='button' type='submit' value='Recover Password'/>
+					<input class='field' type='password' name='password' placeholder='Password' /><br/>
+					<input class='button' type='submit' value='Login'/>
 				</form>
-				<a href='login.php'>Back</a>
+				<a href='register.php'>Register</a> |
+				<a href='forgotPassword.php'>Forgot Password?</a>
 			</div>
 		</div>
 		<footer>

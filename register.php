@@ -3,84 +3,32 @@
 	<head>
 		<title>Register - Radford Yard Sale</title>
 		<meta charset = 'utf-8' />
-		<style type="text/css">
-			html {
-				text-align: center;
-				font-family: ‘Lucida Sans Unicode’, ‘Lucida Grande’, sans-serif;
-				font-size: 12px;
-			}
-
-			body {
-				background: url('http://imagizer.imageshack.us/a/img923/8540/iKnaiD.jpg');
-				background-size: 100%;
-				background-repeat: no-repeat;
-			}
-
-			#title {
-				font-size: 28px;
-				font-style: normal;
-			}
-
-			#login {
-				width: 500px;
-				height: 500px;
-				position: absolute;
-				left: 50%;
-				top: 50%;
-				margin: -250px 0 0 -250px;
-			}
-
-			#loginFields {
-				background-color: rgb(255,255,255);
-				border: thin solid;
-				width: 300px;
-				margin: auto;
-				padding: 30px;
-				padding-top: 0;
-				box-shadow: 3px 3px 8px;
-				margin-bottom: 10px;
-				position: relative;
-			}
-
-			.field {
-				width: 300px;
-				height: 30px;
-				margin-bottom: 10px;
-			}
-
-			#loginButton {
-				width: 306px;
-				height: 30px;
-				margin-bottom: 10px;
-				border-radius: 2px;
-				border: thin solid rgb(231,231,231);
-				background-color: rgb(231,231,231);
-			}
-
-			footer {
-				display: block;
-				position: absolute;
-				color: white;
-				bottom: 0;
-				left: 0;
-				width: 100%;
-				height: 100px;
-			}
-		</style>
+		<link rel="stylesheet" href="login-style.css"/>
+		<script src="register-script.js"></script>
 	</head>
 	<body>
 		<div id='login'>
 			<div id='loginFields'>
 				<p id='title'>Radford Yard Sale</p>
-				<form action='loginPageHandler.php' method='post'>
-					<input class='field' type='text' name='name' placeholder='Name' /><br/>
-					<input class='field' type='text' name='email' placeholder='Email Address' /><br/>
-					<input class='field' type='text' name='phone' placeholder='Phone Number' /><br/>
-					<input class='field' type='password' name='password' placeholder='Password' /><br/>
-					<input class='field' type='text' name='confirmPassword' placeholder='Confirm Password' /><br/>
-					<input id='loginButton' type='submit' value='Register'/>
+				<form name="registerForm" action='register-handler.php' method='post'>
+					<p class="error-msg" id="nameError"></p>
+					<input class='field' type='text' name='name' placeholder='Name *' onchange="validateName();"/><br/>
+					
+					<p class="error-msg" id="emailError"></p>
+					<input class='field' type='text' name='email' placeholder='Email Address *' onchange="validateEmail();"/><br/>
+					
+					<p class="error-msg" id="phoneError"></p>
+					<input class='field' type='text' name='phone' placeholder='Phone Number *' onchange="validatePhone();"/><br/>
+					
+					<p class="error-msg" id="passwordError"></p>
+					<input class='field' type='password' name='password' placeholder='Password *' onchange="validatePassword();"/><br/>
+					
+					<p class="error-msg" id="confirmPasswordError"></p>
+					<input class='field' type='password' name='confirmPassword' placeholder='Confirm Password *' onchange="validateConfirmPassword();"/><br/>
+
+					<input class='button' type='submit' value='Register'/>
 				</form>
-				<a href='loginPage.php'>Back</a>
+				<a href='login.php'>Back</a>
 			</div>
 		</div>
 		<footer>
