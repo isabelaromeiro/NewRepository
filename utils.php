@@ -82,7 +82,6 @@ function upload_product_image($conn){
 	$newfilename = round(microtime(true)) . '.' . end($temp);
 	// move_uploaded_file($_FILES["productImage"]["tmp_name"], "../img/imageDirectory/" . $newfilename);
 
-
 	$target_file = $todir . $newfilename;
 
 	if ( !!$_FILES['productImage']['tmp_name'] ) // is the file uploaded yet?
@@ -95,8 +94,7 @@ function upload_product_image($conn){
 	        {
 	            $sql = "INSERT INTO `image` (`name`, `image`) VALUES ('image_name', '$target_file')";
 				mysqli_query($conn, $sql);
-				$imageId = $conn->insert_id;
-				echo $sql;
+				$imageId = mysqli_insert_id($conn);
 	        }
 	    }
 	    else
@@ -105,22 +103,6 @@ function upload_product_image($conn){
 	    }
 	}
 
-	// // Check if image file is a actual image or fake image
- //    $check = getimagesize($_FILES["productImage"]["tmp_name"]);
- //    if($check !== false) {
- //        echo "File is an image - " . $check["mime"] . ".";
- //        $uploadOk = 1;
- //    } else {
- //        echo "File is not an image.";
- //        $uploadOk = 0;
- //    }
-
-
- //    // Check image size
-	// if ($_FILES["productImage"]["size"] > 500000) {
-	//     echo "Sorry, your image is too large.";
-	//     $uploadOk = 0;
-	// }
 
 	return $imageId;
 	
@@ -129,6 +111,8 @@ function upload_product_image($conn){
 function insert_product($POST){
 
 	date_default_timezone_set('UTC');
+
+	$id_product = "";
 
 	$conn = mysqli_connect(SERVERNAME, USERNAME, PASSWORD, DBNAME);
 	
@@ -145,27 +129,33 @@ function insert_product($POST){
 		$last_update 	=	$date_created;
 		$sold 			=	0;
 		$is_free 		=	mysqli_real_escape_string($conn, $POST['is_free'])? 0:1;
+		$title 			=	mysqli_real_escape_string($conn, $POST['price']);
 		$description 	=	mysqli_real_escape_string($conn, $POST['description']);	
 		$condition 		=	mysqli_real_escape_string($conn, $POST['condition']);
 		$id_image 		=   upload_product_image($conn);
 		// $id_image 		=   1;
 		// add resistances/weaknessess
 		$sql = "INSERT INTO `product` (`id_user`, `id_category`, `title`, `date_created`, `last_update`, `sold`, `is_free`, `description`, `condition`, `id_image`) VALUES ($id_user, $id_category, '$title', '$date_created' , '$last_update', $sold, $is_free, '$description' , '$condition', $id_image)";
+		
 
-		if (!mysqli_query($conn, $sql)) {
-			 echo "Error: " . mysqli_error($conn);
+		if ($result = mysqli_query($conn, $sql)) {
+		    $id_product = $conn->insert_id;
+		}else{
+			echo "Error: " . mysqli_error($conn);
 		}
 
 	}
 	
 	$conn->close();
+
+	return $id_product;
 }
 
 function products($list){
 
 
 	while ($row = mysqli_fetch_array($list)) {  # Note use of `=` for assignment *and* return value
-		echo "<div class='product'>
+		echo "<a href='/productPage.php?id=" . $row["id_product"] ."'> <div class='product'>
 			<div class='img'>";
 		echo "<img class='productImage' src='" . $row['image'] ."' alt='" . $row['name'] . "'/>";
 			
@@ -180,14 +170,14 @@ function products($list){
 
 		echo "<div class='right'><ul>";
 		echo "<li class='top'>" . $price . "</li>";
-		echo "<li>" . $row['date_created'] . "</li></ul></div></div>";
+		echo "<li>" . $row['date_created'] . "</li></ul></div></div></a>";
 
 
 		// We could also use $row[0], $row[1], $row[2] but it's preferred to use column-name when possible.
 	}
 }
 
-function get_all_products(){
+function get_all_products($id_product=NULL){
 	$conn = mysqli_connect(SERVERNAME, USERNAME, PASSWORD, DBNAME);
 	
 	if ($conn->connect_error) {
@@ -195,22 +185,68 @@ function get_all_products(){
 	    exit;
 	}
 
-	$query = "SELECT * FROM `product`, `category`, `image` WHERE `product`.`id_category` = `category`.`id_category` AND `product`.`id_image` = `image`.`id_image`;";
+	if(!empty($id_product)) {
+		$query = "SELECT * FROM `product`, `category`, `image` WHERE `product`.`id_product` = $id_product AND `product`.`id_category` = `category`.`id_category` AND `product`.`id_image` = `image`.`id_image`;";
+	}else{
+		$query = "SELECT * FROM `product`, `category`, `image` WHERE `product`.`id_category` = `category`.`id_category` AND `product`.`id_image` = `image`.`id_image`;";
+	}
 
 	$allRows = mysqli_query($conn, $query);
 	
 	$numRows = mysqli_num_rows($allRows);
-	if ($numRows == 0) {
-		$infos = array();
-	} else {
-		$infos = $allRows;
-	}
-	
 	$conn->close();
-
-	return $infos;
-	
+	if ($numRows == 0) {
+		return array();
+	} else {
+		return $allRows;
+	}
+		
 }
+
+function stringErrorMessage($string,$required){
+	$stringLen = strlen($string);
+	$errorMessage = false;
+	
+	if($required && $stringLen == 0){
+		$errorMessage = "is required";
+	}
+
+	return $errorMessage;
+
+}
+
+function allErrorMessages($formInfo){
+
+		$errors = array();
+
+		$titleError = stringErrorMessage($formInfo["title"], true);
+		if($titleError){
+			$errors["title"] = "The title " . $titleError;
+		}
+
+		$categoryError = stringErrorMessage($formInfo["category"], true);
+		if($categoryError){
+			$errors["category"] = "The category " . $categoryError;
+		}
+
+		$conditionError = stringErrorMessage($formInfo["condition"], true);
+		if($conditionError){
+			$errors["condition"] = "The condition " . $conditionError;
+		}
+
+		if(!$formInfo["is_free"] && !$formInfo['price']){
+			$errors["price"] = "If it's not free, please give a price.";
+		}
+
+		$descriptionError = stringErrorMessage($formInfo["description"], true);
+		if($descriptionError){
+			$errors["description"] = "The description " . $descriptionError;
+		}
+
+
+		return $errors;
+
+	}
 
 
 ?>
