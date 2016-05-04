@@ -1,7 +1,14 @@
-<footer>
-			<p>Radford Yard Sale | 2016</p>
-			<p>Contact us: <a href='mailto:radfordyarsale@gmail.com'>radfordyardsale@gmail.com</a></p>
-		</footer>
+</div>
+<footer class="footer">
+  <div>
+    <p class="text-muted">Radford Yard Sale | 2016 | Contact us: <a href='mailto:radfordyarsale@gmail.com'>radfordyardsale@gmail.com</a></p>
+  </div>
+</footer>
+
+<!-- <footer>
+			
+			
+		</footer> -->
 
 		<script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
 		<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>

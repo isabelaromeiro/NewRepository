@@ -18,11 +18,12 @@
 			exit;
 		}
 
-		$row = mysqli_fetch_row($result);
+		$row = mysqli_fetch_array($result);
 		if($row) {
 			session_start();
 			//storing email in session
-			$_SESSION["email"] = $email;
+			$_SESSION["email"] = $row["email"];
+			$_SESSION["logged_in"] = true;
 			header("location:mainPage.php");
 			exit();
 		} else {

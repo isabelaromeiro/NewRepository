@@ -18,6 +18,7 @@
 	<div class="col-lg-4 col-md-4 col-sm-4 well">
 		<h2 class="text-success">
 		<?php 
+			print_r($formInfo);
 			if($formInfo["is_free"]){
 				echo "Free!";
 			}else{
