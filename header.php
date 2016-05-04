@@ -1,266 +1,83 @@
-<?php include_once('constants.php') ?>
-<?php include_once('utils.php') ?>
-
+<?php require_once("db.php"); ?>
 <!DOCTYPE html>
-<html lang = 'eng'>
-	<head>
-		<title>Radford Yard Sale</title>
-		<meta charset = 'utf-8' />
+<html lang="en">
+    <head>
+        <title>Radford Yard Sale</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+		<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+		<script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+		<!-- Latest compiled and minified Bootstrap JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
 		<style type="text/css">
+			.navbar {
+				background-color: rgb(246, 246, 246);
+			}
+			.navbar-brand img {
+				width: 254px;
+				height: 50px;
+				margin-top: -15px;
+			}
 
-		/*General formating*/
-		html {
-			max-width: 1000px;
-			margin: auto;
-			font-family: ‘Lucida Sans Unicode’, ‘Lucida Grande’, sans-serif;
-		}
+			.dropdown {
+				margin-top: 7px;
+			}
 
-		a {
-			text-decoration: none;
-			color: black;
-		}
+			#search_box_navbar {
+				width: 400px;
+			}
 
-		a:hover {
-			text-decoration: underline;
-		}
-		/*End of general formating*/
-
-		/*CSS for the navigation bar*/
-		nav {
-			height: 50px;
-			background-color: #f6f6f6;
-		}
-
-		.logo {
-			width: 300px;
-			height: 50px;
-			margin-left: 10px;
-		}
-
-		#searchbox {
-			width: 300px;
-			height: 30px;
-			background: white url('http://static.tumblr.com/ftv85bp/MIXmud4tx/search-icon.png') no-repeat 9px center;
-			padding: 9px 10px 9px 32px;
-			border: solid 1px #ccc;
-			border-radius: 10em;
-			font-size: 100%;
-			position: relative;
-		}
-
-		.search-name {
-			float: right;
-			display: inline-block;
-			margin-top: 5px;
-			margin-right: 10px;
-		}
-
-		.menu {
-			padding: 10px;
-			display: inline-block;
-			font-size: 18px;
-			margin-left: 30px;
-			margin-right: 10px;
-			z-index: 1;
-		}
-
-		.menu:hover {
-			background-color: #ddd;
-		}
-
-		ul {
-			list-style: none;
-			position: relative;
-			margin: 0;
-			padding: 0;
-		}
-
-		.menu ul {
-			list-style: none;
-			position: absolute;
-			top: 100%;
-			left: 0;
-			background: #ddd;
-			padding: 0;
-		}
-
-		.menu div {
-			display: none;
-			position: absolute;
-			margin-left: -40px;
-			margin-top: 10px;
-		}
-
-		.menu:hover .content {
-			display: block;
-		}
-
-		.content li {
-			background-color: #f6f6f6;
-			position: relative;
-			line-height: 32px;
-			width: 130px;
-			text-align: center;
-		}
-
-		.content li:hover {
-			background-color: #ddd;
-		}
-		/*End of CSS for the nav bar*/
-
-		/*CSS for the aside */
-		aside {
-			margin-top: 10px;
-			display: block;
-			width: 200px;
-			float: left;
-		}
-
-		aside li {
-			list-style: none;
-			font-size: 18px;
-			margin: 0;
-			padding: 10px;
-			background-color: #f6f6f6;
-		}
-
-		aside li:hover {
-			background-color: #ddd;
-		}
-
-		.menuTitle {
-			background-color: #ddd;
-		}
-		/*End of aside CSS*/
-
-		/*CSS for the article*/
-		.mostRecent {
-			font-size: 18px;
-			float: right;
-			background-color: #ddd;
-			margin-top: 10px;
-			width: 750px;
-			padding: 10px;
-			margin-bottom: 10px;
-		}
-
-		.product {
-			font-size: 18px;
-			float: right;
-			background-color: #f6f6f6;
-			width: 750px;
-			padding: 10px;
-			border-bottom: 10px solid white;
-			display: table;
-		}
-
-		.product:hover {
-			background-color: #ddd;
-		}
-
-		.img {
-		    margin: 5px;
-			border: 1px solid #ccc;
-		    float: left;
-			width: 180px;
-			height: 100px;
-			position: relative;
-		}
-
-		.productImage {
-			display: block;
-			max-width: 100%;
-			max-height: 100%;
-			margin-left: auto;
-			margin-right: auto;
-		}
-
-		.product ul {
-			position: relative;
-			vertical-align: middle;
-			display: table-cell;
-			margin-right: 200px;
-		}
-
-		.left {
-			text-align: left;
-			position: relative;
-			float: left;
-			margin-left: 200px;
-			margin-top: -100px;
-			margin-right: 150px;
-			max-height: auto;
-		}
-
-		.right {
-			text-align: left;
-			position: relative;
-			float: right;
-			margin-top: -100px;
-		}
-
-		.top {
-			margin-bottom: 60px;
-		}
-
-		/*CSS for the footer */
-		footer {
-				display: block;
-				position: absolute;
-				color: white;
-				bottom: 0;
-				left: 50%;
-				margin-left: -150px;
-				width: 300px;
-				height: 100px;
-				text-align: center;
-				color: black;
-		}
-
-		footer p {
-			display: block;
-		}
-		/*End of footer CSS*/
 		</style>
 
-		<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    </head>
+    <body class="container">
+    	<nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="mainPage.php">
+                    <img src="http://imageshack.com/a/img923/1980/De7xLd.png" height="75px">
+                </a>
+            </div>
 
-		<script type="text/javascript">
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	            	<!--  SEARCH BOX -->
+	            <div class="col-sm-3 col-md-4 col-md-offset-1">
+			        <form class="navbar-form" role="search">
+			        <div class="input-group" id="search_box_navbar">
+			            <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
+			            <div class="input-group-btn">
+			                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+			            </div>
+			        </div>
+			        </form>
+			    </div>
 
-
-		</script>
-	</head>
-	<body>
-		<nav class="col-md-12">
-			<a href='mainPage.php'>
-				<img class='logo' src="http://imageshack.com/a/img923/1980/De7xLd.png" alt='Logo'>
-			</a>
-			<div class='search-name'>
-				<input type='search' id='searchbox' name='search' placeholder='Search'/>
-				<ul id='menu' class='menu'>
-					<li>
-						<?php
-							$conn = mysqli_connect(SERVERNAME, USERNAME, PASSWORD, DBNAME);
-							if (!$conn ){
-								echo 'erro';
-							}
-							$email = $_POST['email'];
-							$result = mysqli_query($conn, "SELECT name FROM user WHERE email = 'tanna@email.com'");
-							if (!$result) {
-							     echo 'Could not run query: ' . mysql_error();
-							     exit;
-							 }
-							 $row = mysqli_fetch_row($result);
-							 echo $row[0];
-							?> &#9662;</li>
-					<div class='content'>
-						<ul>
-							<li><a href="announce.php">Announce</a></li>
-							<li><a href="myProducts.php">My Products</a></li>
-							<li><a href="loginPage.php">Logout</a></li>
-						</ul>
-					</div>
-				</ul>
-			</div>
-		</nav>
+			      <div class="dropdown pull-right">
+				    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"><?php echo get_username(); ?> 
+				    <span class="caret"></span></button>
+				    <ul class="dropdown-menu">
+				      <li><a href="announce.php">Announce</a></li>
+				      <li><a href="myProducts.php">My Products</a></li>
+				      <li class="divider"></li>
+				      <li><a href="#">Logout</a></li>
+				    </ul>
+				  </div>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+</body>
+</html>
