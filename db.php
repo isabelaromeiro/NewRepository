@@ -3,7 +3,7 @@
     require('constants.php');
 
     function connect() {
-    	$conn = mysqli_connect('localhost', 'proj6', 'brasil2016', 'proj6');
+    	$conn = mysqli_connect(SERVERNAME, USERNAME, PASSWORD, DBNAME);
     	if (!$conn ){
     		echo 'erro';
    		}
@@ -77,7 +77,3 @@
     }
 
 ?>
-
-
-
-

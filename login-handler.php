@@ -1,7 +1,8 @@
 <?php
+	require_once("constants.php");
 
 	//connecting to database
-	$conn = mysqli_connect("localhost", "proj6", "brasil2016", "proj6");
+	$conn = mysqli_connect(SERVERNAME, USERNAME, PASSWORD, DBNAME);
 	if (!$conn) {
 		echo "Error" . mysql_error();
 		exit;

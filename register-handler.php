@@ -1,3 +1,5 @@
+<?php require_once("constants.php"); ?>
+
 <!DOCTYPE html>
 <html lang = 'eng'>
     <head>
@@ -19,12 +21,15 @@
             	//name validation
             	function validateName () {
             		$valid = true;
-            
-            	if (preg_match($namePattern, $name) === 0 || strlen($name) > 50 ) {
-            		$valid = false;
-            	}
-            
-            	return $valid;
+
+                    echo $name;
+                    echo $namePattern;
+                
+                	if (preg_match($namePattern, $name) === 0 || strlen($name) > 50 ) {
+                		$valid = false;
+                	}
+                
+                	return $valid;
             	}
             
             //email 
@@ -62,7 +67,7 @@
             }
             
             if (validateName() && validateEmail() && validatePhone() && validatePassword()) {
-            	$conn = mysqli_connect('localhost', 'proj6', 'brasil2016', 'proj6');
+            	$conn = mysqli_connect(SERVERNAME, USERNAME, PASSWORD, DBNAME);
             	if($conn) {
             		echo "conectou";
             	} else {
