@@ -1,5 +1,5 @@
 <?php 
-
+require_once("db.php");
 require_once("constants.php");
 
 function dropdown($list, $name, $topOption){
@@ -210,6 +210,40 @@ function get_all_products(){
 
 	return $infos;
 	
+}
+
+function header_dropdown () {
+
+	session_start();
+
+	if ( $_SESSION["logged_in"] === true) {
+		$username = get_username();
+		$html = "<div class='dropdown pull-right'>
+				    <button class='btn btn-default dropdown-toggle' type='button' data-toggle='dropdown'>$username
+				    <span class='caret'></span></button>
+				    <ul class='dropdown-menu'>
+				      <li><a href='mainPage.php'>Home</a></li>
+				      <li><a href='announce.php'>Announce</a></li>
+				      <li><a href='myProducts.php'>My Products</a></li>
+				      <li class='divider'></li>
+				      <li><a href='logout.php'>Logout</a></li>
+				    </ul>
+				  </div>";
+
+	} else {
+		$html = "<div class='dropdown pull-right'>
+				    <button class='btn btn-default dropdown-toggle' type='button' data-toggle='dropdown'>Hello, Guest! 
+				    <span class='caret'></span></button>
+				    <ul class='dropdown-menu'>
+				      <li><a href='mainPage.php'>Home</a></li>
+				      <li><a href='login.php'>Sign in</a></li>
+				      <li><a href='register.php'>Sign up</a></li>
+				    </ul>
+				  </div>";
+	}
+
+	return $html;
+
 }
 
 

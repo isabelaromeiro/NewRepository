@@ -1,5 +1,6 @@
-<?php include_once('constants.php') ?>
-<?php include_once('utils.php') ?>
+<?php include_once('constants.php'); 
+		include_once('utils.php');
+		include_once("header.php"); ?>
 <!DOCTYPE html>
 <html lang = 'eng'>
 	<head>
@@ -232,39 +233,7 @@
 		</script>
 	</head>
 	<body>
-		<nav>
-			<a href='mainPage.php'>
-				<img class='logo' src="http://imageshack.com/a/img923/1980/De7xLd.png" alt='Logo'>
-			</a>
-			<div class='search-name'>
-				<form class='searchform' action='search.php'>
-					<input type='search' id='searchbox' name='search' placeholder='Search'/>
-				</form>
-				<ul id='menu' class='menu'>
-					<li>
-						<?php
-							$conn = mysqli_connect(SERVERNAME, USERNAME, PASSWORD, DBNAME);
-							if (!$conn ){
-								echo 'erro';
-							}
-							$result = mysqli_query($conn, "SELECT name FROM user WHERE email = 'tanna@email.com'");
-							if (!$result) {
-							    echo 'Could not run query: ' . mysql_error();
-							    exit;
-							}
-							$row = mysqli_fetch_row($result);
-							echo $row[0];
-							?> &#9662;</li>
-					<div class='content'>
-						<ul>
-							<li><a href="announce.php">Announce</a></li>
-							<li><a href="myProducts.php">My Products</a></li>
-							<li><a href="loginPage.php">Logout</a></li>
-						</ul>
-					</div>
-				</ul>
-			</div>
-		</nav>
+		
 		<aside>
 			<ul>
 				<li class='menuTitle'>Categories</li>

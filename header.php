@@ -1,4 +1,6 @@
-<?php require_once("db.php"); ?>
+<?php 
+	require_once("db.php");
+	require_once("utils.php"); ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -56,7 +58,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	            	<!--  SEARCH BOX -->
 	            <div class="col-sm-3 col-md-4 col-md-offset-1">
-			        <form class="navbar-form" role="search">
+			        <form class="navbar-form" role="search" action="search-handler.php" method="get">
 			        <div class="input-group" id="search_box_navbar">
 			            <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
 			            <div class="input-group-btn">
@@ -66,16 +68,7 @@
 			        </form>
 			    </div>
 
-			      <div class="dropdown pull-right">
-				    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"><?php echo get_username(); ?> 
-				    <span class="caret"></span></button>
-				    <ul class="dropdown-menu">
-				      <li><a href="announce.php">Announce</a></li>
-				      <li><a href="myProducts.php">My Products</a></li>
-				      <li class="divider"></li>
-				      <li><a href="#">Logout</a></li>
-				    </ul>
-				  </div>
+			    <?php echo header_dropdown(); ?> 
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
