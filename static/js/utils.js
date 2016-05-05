@@ -93,7 +93,7 @@ function reportError(field, error, tag="p"){
  		descriptionValid = false;
 		reportError(description, "Description is required.");
 	}
-
+	
 	if(!$('#productImage').val()) {
 	   	imageValid = false;
 		reportError(image, "Image is required.");
@@ -101,7 +101,7 @@ function reportError(field, error, tag="p"){
 
  	// document.getElementById("product_form").formBtn.disabled = false;
 
- 	if(titleValid && categoryValid && conditionValid && priceValid && conditionValid && descriptionValid){
+ 	if(titleValid && categoryValid && conditionValid && priceValid && conditionValid && descriptionValid && imageValid){
  		return true;
  	}else{
  		return false;

@@ -2,6 +2,30 @@
 require_once("db.php");
 require_once("constants.php");
 
+$errosUpdateUser = array();
+
+function update_user($userInfo){
+	$conn = mysqli_connect(SERVERNAME, USERNAME, PASSWORD, DBNAME);
+
+	$id_user 		=	$userInfo['id_user'];	
+	$user_name 		=	mysqli_real_escape_string($conn, $userInfo['user_name']);	
+	$user_email 			=	mysqli_real_escape_string($conn, $userInfo['email']);	
+	$phone_number 	=	mysqli_real_escape_string($conn, $userInfo['phone_number']);	
+	
+	
+	if ($conn->connect_errno) {
+	    echo "Sorry, this website is experiencing problems.";
+	    exit;
+	}
+
+	$query = "UPDATE `user` SET `name`='$user_name',`email`='$user_email',`phone_number`='$phone_number' WHERE `id_user` = $id_user";
+
+	if (!$result = mysqli_query($conn, $query)) {
+		echo "Error: " . mysqli_error($conn);
+	}
+
+	$conn->close();
+}
 
 function dropdown($list, $name, $topOption){
 
@@ -122,7 +146,7 @@ function insert_product($POST){
 	    exit;
 	} else {
 			
-		$id_user 	=	mysqli_real_escape_string($conn, $POST['id_user']);	
+		// $id_user 		=	mysqli_real_escape_string($conn, $POST['id_user']);	
 		$id_user 		=	get_id();	
 		$id_category 	=	mysqli_real_escape_string($conn, $POST['category']);	
 		$title 			=	mysqli_real_escape_string($conn, $POST['title']);	
@@ -143,6 +167,7 @@ function insert_product($POST){
 		// add resistances/weaknessess
 		$sql = "INSERT INTO `product` (`id_user`, `id_category`, `title`, `date_created`, `last_update`, `sold`, `is_free`, `price`, `description`, `condition`, `id_image`) VALUES ($id_user, $id_category, '$title', '$date_created' , '$last_update', $sold, $is_free, $price, '$description' , '$condition', $id_image)";
 		
+
 		if ($result = mysqli_query($conn, $sql)) {
 		    $id_product = $conn->insert_id;
 		}else{
@@ -283,6 +308,7 @@ function header_dropdown () {
 				      <li><a href='mainPage.php'>Home</a></li>
 				      <li><a href='announce.php'>Announce</a></li>
 				      <li><a href='myProducts.php'>My Products</a></li>
+				      <li><a href='account-settings.php'>Settings</a></li>
 				      <li class='divider'></li>
 				      <li><a href='logout.php'>Logout</a></li>
 				    </ul>
@@ -302,6 +328,61 @@ function header_dropdown () {
 
 	return $html;
 
+}
+
+
+	
+	
+function validate_update_user($userInfo){
+	
+	if(!validateName($userInfo['user_name']) || !validateEmail($userInfo['email']) || !validatePhone($userInfo['phone_number'])){
+		return $errosUpdateUser;
+	}else{
+		return array();
+	}
+}
+
+//name validation
+function validateName ($name) {
+	$valid = true;
+	$namePattern = "/[A-Za-z]+/";
+	if (preg_match($namePattern, $name) === 0 || strlen($name) > 50 ) {
+		$valid = false;
+		$errosUpdateUser['name'] = "Name invalid";
+	}
+
+	echo $name;
+
+	return $valid;
+}
+
+//email 
+function validateEmail($email) {
+    $conn = mysqli_connect(SERVERNAME, USERNAME, PASSWORD, DBNAME);
+    $valid = true;
+    $emailPattern = "/[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/";
+
+    $query = "SELECT email FROM user WHERE email = '$email'";
+    $result = mysqli_query($conn, $query);
+
+	if (preg_match($emailPattern, $email) === 0 || $result) {
+		$valid = false;
+		$errosUpdateUser['email'] = "Email invalid";
+	}
+
+	return $valid;
+} 
+
+//phone
+function validatePhone($phone) { 
+	$valid = true;
+	$phonePattern = "/[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/";
+	if (preg_match($phonePattern, $phone) === 0) {
+		$valid = false;
+		$errosUpdateUser['phone_number'] = "Phone number invalid";
+	}
+
+	return $valid;
 }
 
 ?>

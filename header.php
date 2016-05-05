@@ -1,13 +1,11 @@
 <?php 
 	session_start();
 	if (!isset($_SESSION['logged_in'])){
-		header( 'Location: login.php' ) ;
+		// header( 'Location: login.php' ) ;
 	}
 
 	require_once("db.php");
 	require_once("utils.php");
-
-	
 
 	?>
 <!DOCTYPE html>

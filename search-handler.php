@@ -12,20 +12,7 @@
 	}
 ?>
 
-	<div class="col-md-3 list-group">
-			<h3>Categories</h3>
-			<a href="#" class="list-group-item active">
-				Cras justo odio
-			</a>
-			<?php 
-				$categories = retrieve_info("category");
-
-				while ($row = mysqli_fetch_array($categories)) {
-					echo "<a href='search-handler.php?category=" . $row['category'] ."' class='list-group-item'>" . $row['category'] ." </a>";
-
-				}
-		?>
-	</div>
+	<?php include_once('categories-menu.php') ?>
 
 		<h3>Results for: '<?php echo $search_term?>'</h3><br/>
 		<div class="col-md-9 row">

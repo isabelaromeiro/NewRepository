@@ -1,7 +1,8 @@
 <?php
-
+	
 	include_once("header.php");
 	require_once("utils.php");
+
 	// define variables and set to empty values
 	$hasError = false;
 	$errors = array();
@@ -20,7 +21,7 @@
 	   $formInfo["description"] = trim($_POST["description"]);
 	   $formInfo["condition"] = trim($_POST["condition"]);
 
-	   $userInfo = retrieve_info("user", $formInfo['id_user'])->fetch_array(MYSQLI_BOTH);
+	   //$userInfo = retrieve_info("user", $formInfo['id_user'])->fetch_array(MYSQLI_BOTH);
 	  
 	}
 
@@ -42,7 +43,7 @@
 		}
 
 		include_once("product_registered.php");
-		include_once("product_info.php");
+		//include_once("product_info.php");
 
 		
 	}else{
