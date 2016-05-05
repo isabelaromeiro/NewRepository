@@ -34,9 +34,19 @@
             
             //email 
             function validateEmail() {
-            	$valid = true;
+                $conn = mysqli_connect(SERVERNAME, USERNAME, PASSWORD, DBNAME);
+                $valid = true;
+
+                if($conn) {
+                    echo "conectou";
+                } else {
+                    echo 'error';
+                }
+
+                $query = "SELECT email FROM user WHERE email = '$email'";
+                $result = mysqli_query($conn, $query);
             
-            	if (preg_match($emailPattern, $email) === 0) {
+            	if (preg_match($emailPattern, $email) === 0 || $result) {
             		$valid = false;
             	}
             
@@ -103,7 +113,11 @@
             <div id='loginFields'>
                 <p id='title'>Radford Yard Sale</p>
                 <form action='register.php' method='post'>
-                    <span>Error: Could not register. Please, try again.</span><br/><br/>
+                    <span><?php if ($email_error){
+                        echo "This email is already registered.<br/>";
+                    } ?>
+                            Error: Could not register. Please, try again.
+                    </span><br/><br/>
                     <input class='button' type='submit' value='Try again'/>
                 </form>
             </div>
