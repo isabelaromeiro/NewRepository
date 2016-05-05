@@ -37,7 +37,7 @@
 		  <input name="price" id="price" type="number" step="0.01" class="form-control" aria-label="Amount (to the nearest dollar)">
 		</div>
 		<label>
-	    	<input name="is_free" id="is_free" type="checkbox" onclick="checkFree();"> Free
+	    	<input value="1" name="is_free" id="is_free" type="checkbox" onclick="checkFree();"> Free
 	    </label>
 	</div>
 

@@ -2,14 +2,27 @@
 require_once("db.php");
 require_once("constants.php");
 
-$errosUpdateUser = array();
+function product_sold($id_product){
+	$conn = mysqli_connect(SERVERNAME, USERNAME, PASSWORD, DBNAME);
+
+	$query = "UPDATE `product` SET `sold`=1 WHERE `id_product` = $id_product";
+
+	if (!$result = mysqli_query($conn, $query)) {
+		echo "Error: " . mysqli_error($conn);
+	}
+
+	$conn->close();
+
+}
 
 function update_user($userInfo){
+
+	session_start();
 	$conn = mysqli_connect(SERVERNAME, USERNAME, PASSWORD, DBNAME);
 
 	$id_user 		=	$userInfo['id_user'];	
 	$user_name 		=	mysqli_real_escape_string($conn, $userInfo['user_name']);	
-	$user_email 			=	mysqli_real_escape_string($conn, $userInfo['email']);	
+	$user_email 	=	mysqli_real_escape_string($conn, $userInfo['email']);	
 	$phone_number 	=	mysqli_real_escape_string($conn, $userInfo['phone_number']);	
 	
 	
@@ -23,6 +36,8 @@ function update_user($userInfo){
 	if (!$result = mysqli_query($conn, $query)) {
 		echo "Error: " . mysqli_error($conn);
 	}
+
+	$_SESSION["email"] = $user_email;
 
 	$conn->close();
 }
@@ -145,7 +160,7 @@ function insert_product($POST){
 	    echo "Sorry, this website is experiencing problems.";
 	    exit;
 	} else {
-			
+		
 		// $id_user 		=	mysqli_real_escape_string($conn, $POST['id_user']);	
 		$id_user 		=	get_id();	
 		$id_category 	=	mysqli_real_escape_string($conn, $POST['category']);	
@@ -153,15 +168,14 @@ function insert_product($POST){
 		$date_created 	=	date("Y-m-d");
 		$last_update 	=	$date_created;
 		$sold 			=	0;
-		$is_free 		=	mysqli_real_escape_string($conn, $POST['is_free']) == "on" ? 1:0;
+		$is_free 		=	mysqli_real_escape_string($conn, $POST['is_free']) == "1" ? 1:0;
 		$price 			=	mysqli_real_escape_string($conn, $POST['price']);
 		$description 	=	mysqli_real_escape_string($conn, $POST['description']);	
 		$condition 		=	mysqli_real_escape_string($conn, $POST['condition']);
 		$id_image 		=   upload_product_image($conn);
 
-		if(empty($price)){
+		if($is_free){
 			$price = 0.0;
-			$is_free = 0;
 		}
 		// $id_image 		=   1;
 		// add resistances/weaknessess
@@ -183,22 +197,32 @@ function insert_product($POST){
 
 function products($list){
 
+	$iduser = get_id();
+
 	$productCodeSoFar = "";
 
 	while ($row = mysqli_fetch_array($list)) {  # Note use of `=` for assignment *and* return value
+		if(!$row['sold']){
+			$productCodeSoFar = $productCodeSoFar . "<div class='col-sm-6 col-md-4'><div class='thumbnail'>";
 
-		$productCodeSoFar = $productCodeSoFar . "<div class='col-sm-6 col-md-4'><div class='thumbnail'>";
+			$productCodeSoFar = $productCodeSoFar . "<img style='height: 160px;' src='" . $row['image']  . " ' alt='...'><div class='caption'>";
 
-		$productCodeSoFar = $productCodeSoFar . "<img style='height: 160px;' src='" . $row['image']  . " ' alt='...'><div class='caption'>";
+			$productCodeSoFar = $productCodeSoFar .  "<h3>" .  $row['title'] . "</h3>";
 
-		$productCodeSoFar = $productCodeSoFar .  "<h3>" .  $row['title'] . "</h3>";
+			$price = $row['is_free'] == 1? "Free!": "$ " . $row['price'];
 
-		$price = $row['is_free'] == 1? "Free!": "$ " . $row['price'];
-		$productCodeSoFar = $productCodeSoFar .  "<p class='text-success'>" . $price . "</p> ";
+			$productCodeSoFar = $productCodeSoFar .  "<p class='text-success'>" . $price . "</p> ";
 
-		$productCodeSoFar = $productCodeSoFar .  "<p><a href='productPage.php?id=" . $row["id_product"] . "' class='btn btn-primary' role='button'>More details!</a></p>";
+			$productCodeSoFar = $productCodeSoFar .  "<p><a href='productPage.php?id=" . $row["id_product"] . "' class='btn btn-primary' role='button'>More details!</a></p>";
 
-		$productCodeSoFar = $productCodeSoFar .  "</div></div></div>";
+			if($row['id_user'] == $iduser){
+				$productCodeSoFar = $productCodeSoFar .  "<p><a href='productPage.php?sold=true&id=" . $row["id_product"] . "' class='btn btn-danger' role='button'>Sold!</a></p>";
+			}
+				
+
+			$productCodeSoFar = $productCodeSoFar .  "</div></div></div>";
+		}
+		
 
 	}
 
@@ -332,14 +356,20 @@ function header_dropdown () {
 
 
 	
-	
 function validate_update_user($userInfo){
-	
-	if(!validateName($userInfo['user_name']) || !validateEmail($userInfo['email']) || !validatePhone($userInfo['phone_number'])){
-		return $errosUpdateUser;
-	}else{
-		return array();
+	$errosUpdateUser = array();
+	if(!validateName($userInfo['user_name'])){
+		$errosUpdateUser['name'] = "Name invalid";
 	}
+	if(!validateEmail($userInfo['email'])){
+		$errosUpdateUser['email'] = "Email invalid";
+	}
+	if(!validatePhone($userInfo['phone_number'])){
+		$errosUpdateUser['name'] = "Name invalid";
+	}
+
+	return $errosUpdateUser;
+	
 }
 
 //name validation
@@ -348,29 +378,21 @@ function validateName ($name) {
 	$namePattern = "/[A-Za-z]+/";
 	if (preg_match($namePattern, $name) === 0 || strlen($name) > 50 ) {
 		$valid = false;
-		$errosUpdateUser['name'] = "Name invalid";
+		
 	}
-
-	echo $name;
 
 	return $valid;
 }
 
 //email 
 function validateEmail($email) {
-    $conn = mysqli_connect(SERVERNAME, USERNAME, PASSWORD, DBNAME);
     $valid = true;
     $emailPattern = "/[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/";
+    if (preg_match($emailPattern, $email) === 0) {
+        $valid = false;
+    }
 
-    $query = "SELECT email FROM user WHERE email = '$email'";
-    $result = mysqli_query($conn, $query);
-
-	if (preg_match($emailPattern, $email) === 0 || $result) {
-		$valid = false;
-		$errosUpdateUser['email'] = "Email invalid";
-	}
-
-	return $valid;
+    return $valid;
 } 
 
 //phone
@@ -379,7 +401,6 @@ function validatePhone($phone) {
 	$phonePattern = "/[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/";
 	if (preg_match($phonePattern, $phone) === 0) {
 		$valid = false;
-		$errosUpdateUser['phone_number'] = "Phone number invalid";
 	}
 
 	return $valid;

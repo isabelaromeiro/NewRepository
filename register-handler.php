@@ -1,5 +1,3 @@
-<?php require_once("constants.php"); ?>
-
 <!DOCTYPE html>
 <html lang = 'eng'>
     <head>
@@ -18,84 +16,71 @@
             $emailPattern = "/[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/";
             $phonePattern = "/[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/";
             
-            	//name validation
-            	function validateName () {
-            		$valid = true;
-
-                    echo $name;
-                    echo $namePattern;
-                
-                	if (preg_match($namePattern, $name) === 0 || strlen($name) > 50 ) {
-                		$valid = false;
-                	}
-                
-                	return $valid;
-            	}
+                //name validation
+                function validateName () {
+                    $valid = true;
+            
+                if (preg_match($namePattern, $name) === 0 || strlen($name) > 50 ) {
+                    $valid = false;
+                }
+            
+                return $valid;
+                }
             
             //email 
             function validateEmail() {
-                $conn = mysqli_connect(SERVERNAME, USERNAME, PASSWORD, DBNAME);
                 $valid = true;
-
+            
+                if (preg_match($emailPattern, $email) === 0) {
+                    $valid = false;
+                }
+            
+                return $valid;
+            } 
+            
+            //phone
+            function validatePhone() { 
+                $valid = true;
+            
+                if (preg_match($phonePattern, $phone) === 0) {
+                    $valid = false;
+                }
+            
+                return $valid;
+            }
+            
+            //password
+            function validatePassword() {
+                $valid = true;
+                $length = strlen($_POST["password"]);
+                
+                if($length < 6 || $length > 25 || strcmp($_POST["password"], $_POST["confirmPassword"]) != 0) {
+                    $valid = false;
+                }
+            
+                return $valid;
+            }
+            
+            if (validateName() && validateEmail() && validatePhone() && validatePassword()) {
+                $conn = mysqli_connect('localhost', 'proj6', 'brasil2016', 'proj6');
                 if($conn) {
                     echo "conectou";
                 } else {
                     echo 'error';
                 }
 
-                $query = "SELECT email FROM user WHERE email = '$email'";
-                $result = mysqli_query($conn, $query);
+                $hashedPassword = hash("md5", $password);
+                $query = "INSERT INTO user (name, email, password, phone_number)
+                          VALUES ('$name', '$email', '$hashedPassword', '$phone')";
+                $insert = mysqli_query($conn, $query);
             
-            	if (preg_match($emailPattern, $email) === 0 || $result) {
-            		$valid = false;
-            	}
+                if (!$insert) {
+                    echo "\nErro " . mysqli_error($conn);
+                    exit;
+                }
+                mysqli_close($conn);
             
-            	return $valid;
-            } 
-            
-            //phone
-            function validatePhone() { 
-            	$valid = true;
-            
-            	if (preg_match($phonePattern, $phone) === 0) {
-            		$valid = false;
-            	}
-            
-            	return $valid;
-            }
-            
-            //password
-            function validatePassword() {
-            	$valid = true;
-            	$length = strlen($_POST["password"]);
-            	
-            	if($length < 6 || $length > 25 || strcmp($_POST["password"], $_POST["confirmPassword"]) != 0) {
-            		$valid = false;
-            	}
-            
-            	return $valid;
-            }
-            
-            if (validateName() && validateEmail() && validatePhone() && validatePassword()) {
-            	$conn = mysqli_connect(SERVERNAME, USERNAME, PASSWORD, DBNAME);
-            	if($conn) {
-            		echo "conectou";
-            	} else {
-            		echo 'error';
-            	}
-
-            	$hashedPassword = hash("md5", $password);
-            	$query = "INSERT INTO user (name, email, password, phone_number)
-            			  VALUES ('$name', '$email', '$hashedPassword', '$phone')";
-            	$insert = mysqli_query($conn, $query);
-            
-            	if (!$insert) {
-            		echo "\nErro " . mysqli_error($conn);
-            		exit;
-            	}
-            	mysqli_close($conn);
-            
-            	?>
+                ?>
         <div id='login'>
             <div id='loginFields'>
                 <p id='title'>Radford Yard Sale</p>
@@ -108,16 +93,12 @@
         <?php
             }
             else {
-            	?>
+                ?>
         <div id='login'>
             <div id='loginFields'>
                 <p id='title'>Radford Yard Sale</p>
                 <form action='register.php' method='post'>
-                    <span><?php if ($email_error){
-                        echo "This email is already registered.<br/>";
-                    } ?>
-                            Error: Could not register. Please, try again.
-                    </span><br/><br/>
+                    <span>Error: Could not register. Please, try again.</span><br/><br/>
                     <input class='button' type='submit' value='Try again'/>
                 </form>
             </div>

@@ -17,8 +17,11 @@
 
 	<div class="col-lg-4 col-md-4 col-sm-4 well">
 		<h2 class="text-success">
-		<?php 
-			if($formInfo["is_free"]){
+		<?php
+			if($formInfo["sold"]){
+				echo "Sold!";
+			}
+			else if($formInfo["is_free"]){
 				echo "Free!";
 			}else{
 				echo "$ ".$formInfo["price"];

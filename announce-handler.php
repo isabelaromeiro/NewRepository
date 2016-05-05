@@ -16,7 +16,7 @@
 	   $formInfo["date_created"] = trim($_POST["date_created"]);
 	   $formInfo["last_update"] = trim($_POST["last_update"]);
 	   $formInfo["sold"] = trim($_POST["sold"]);
-	   $formInfo["is_free"] = trim($_POST["is_free"]) == "on" ? 1:0;
+	   $formInfo["is_free"] = trim($_POST["is_free"]) == "1" ? 1:0;
 	   $formInfo["price"] = trim($_POST["price"]);
 	   $formInfo["description"] = trim($_POST["description"]);
 	   $formInfo["condition"] = trim($_POST["condition"]);
