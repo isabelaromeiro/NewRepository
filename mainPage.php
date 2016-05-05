@@ -7,12 +7,20 @@
 			<a href="#" class="list-group-item active">
 				Cras justo odio
 			</a>
-			<a href="#" class="list-group-item">Categories</a>
-			<a href="#" class="list-group-item">Books</a>
+			<?php 
+				$categories = retrieve_info("category");
+
+				while ($row = mysqli_fetch_array($categories)) {
+					echo "<a href='search.php?category=" . $row['category'] ."' class='list-group-item'>" . $row['category'] ." </a>";
+
+				}
+			 ?>
+			
+			<!-- <a href="#" class="list-group-item">Books</a>
 			<a href="#" class="list-group-item">Electronics</a>
 			<a href="#" class="list-group-item">Furniture</a>
 			<a href="#" class="list-group-item">Games</a>
-			<a href="#" class="list-group-item">Home & Kitchen</a>
+			<a href="#" class="list-group-item">Home & Kitchen</a> -->
 
 		</div>
 
@@ -23,7 +31,7 @@
 		<?php
 			$results = get_all_products();
 			// $row = $result->fetch_array(MYSQLI_ASSOC);
-			
+
 			echo(products($results));
 		?>
 

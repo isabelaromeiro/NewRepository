@@ -76,4 +76,23 @@
 
     }
 
+    function search_by_category ($search_term) {
+        $conn = connect();
+
+        $result = mysqli_query($conn, "SELECT * FROM `product`, `image`, `category`
+                                        WHERE `category`.`category` = '$search_term'
+                                        AND `product`.`id_category` = `category`.`id_category`
+                                        AND `product`.`id_image` = `image`.`id_image`");
+        if (!$result) {
+            echo 'Could not run query: ' . mysql_error();
+            exit;
+        }
+
+
+        while ($row = mysqli_fetch_array($result)) {
+            echo $row['title'] . "<br/>";
+        }
+
+    }
+
 ?>

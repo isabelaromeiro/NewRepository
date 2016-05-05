@@ -1,4 +1,7 @@
-<?php include_once('header.php') ?>
+<?php
+	include_once('header.php');
+?>
+
 <form id="product_form" action="announce-handler.php" method="post" enctype="multipart/form-data" onsubmit="return validateAll();">
 
 	<div class="form-group col-md-4">

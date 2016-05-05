@@ -171,7 +171,7 @@ function products($list){
 		$price = $row['is_free'] == 0? "Free!": "$ " . $row['price'];
 		$productCodeSoFar = $productCodeSoFar .  "<p class='text-success'>" . $price . "</p> ";
 
-		$productCodeSoFar = $productCodeSoFar .  "<p><a href='/productPage.php?id=" . $row["id_product"] . "' class='btn btn-primary' role='button'>More details!</a></p>";
+		$productCodeSoFar = $productCodeSoFar .  "<p><a href='productPage.php?id=" . $row["id_product"] . "' class='btn btn-primary' role='button'>More details!</a></p>";
 
 		$productCodeSoFar = $productCodeSoFar .  "</div></div></div>";
 
