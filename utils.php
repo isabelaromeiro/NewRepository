@@ -2,6 +2,7 @@
 require_once("db.php");
 require_once("constants.php");
 
+
 function dropdown($list, $name, $topOption){
 
 	$currSelect = "<select name=\"$name\" id=\"$name\" class=\"form-control\">\n";
@@ -36,7 +37,7 @@ function retrieve_info($tablename, $id = NULL){
 	    echo "Sorry, this website is experiencing problems.";
 	    exit;
 	} else if(!empty($id)) {
-		$query = "SELECT * FROM " . $tablename . " WHERE id=$id;";
+		$query = "SELECT * FROM " . $tablename . " WHERE id_$tablename=$id;";
 		$allRows = mysqli_query($conn, $query);
 		
 		$numRows = mysqli_num_rows($allRows);
@@ -128,7 +129,7 @@ function insert_product($POST){
 		$date_created 	=	date("Y-m-d");
 		$last_update 	=	$date_created;
 		$sold 			=	0;
-		$is_free 		=	mysqli_real_escape_string($conn, $POST['is_free'])? 0:1;
+		$is_free 		=	mysqli_real_escape_string($conn, $POST['is_free']) == "on" ? 1:0;
 		$price 			=	mysqli_real_escape_string($conn, $POST['price']);
 		$description 	=	mysqli_real_escape_string($conn, $POST['description']);	
 		$condition 		=	mysqli_real_escape_string($conn, $POST['condition']);
@@ -167,8 +168,7 @@ function products($list){
 
 		$productCodeSoFar = $productCodeSoFar .  "<h3>" .  $row['title'] . "</h3>";
 
-
-		$price = $row['is_free'] == 0? "Free!": "$ " . $row['price'];
+		$price = $row['is_free'] == 1? "Free!": "$ " . $row['price'];
 		$productCodeSoFar = $productCodeSoFar .  "<p class='text-success'>" . $price . "</p> ";
 
 		$productCodeSoFar = $productCodeSoFar .  "<p><a href='productPage.php?id=" . $row["id_product"] . "' class='btn btn-primary' role='button'>More details!</a></p>";
@@ -269,6 +269,9 @@ function allErrorMessages($formInfo){
 			$errors["description"] = "The description " . $descriptionError;
 		}
 
+		if(!file_exists($_FILES['productImage']['tmp_name']) || !is_uploaded_file($_FILES['productImage']['tmp_name'])) {
+		    $errors["image"] = "The image is required";
+		}
 
 		return $errors;
 

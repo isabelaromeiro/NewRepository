@@ -8,6 +8,7 @@
         if(!empty($_GET['id'])){
             $product_info = get_all_products($_GET['id']);
             $formInfo = $product_info->fetch_array(MYSQLI_BOTH);
+            $userInfo = retrieve_info("user", $formInfo['id_user'])->fetch_array(MYSQLI_BOTH);
             include_once("product_info.php");
         }
 

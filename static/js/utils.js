@@ -50,12 +50,14 @@ function reportError(field, error, tag="p"){
  	var conditionValid = true;
  	var priceValid = true;
  	var descriptionValid = true;
+ 	var imageValid = true;
 
  	var title = document.getElementById("title");
  	var category = document.getElementById("category");
  	var condition = document.getElementById("condition");
  	var price = document.getElementById("price");
  	var description = document.getElementById("description");
+ 	var image = document.getElementById("productImage");
 
  	if(title.value.length == 0){
  		titleValid = false;
@@ -90,6 +92,11 @@ function reportError(field, error, tag="p"){
 	if(description.value.length == 0){
  		descriptionValid = false;
 		reportError(description, "Description is required.");
+	}
+
+	if(!$('#productImage').val()) {
+	   	imageValid = false;
+		reportError(image, "Image is required.");
 	}
 
  	// document.getElementById("product_form").formBtn.disabled = false;

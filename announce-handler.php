@@ -1,5 +1,5 @@
 <?php
-	
+
 	include_once("header.php");
 	require_once("utils.php");
 	// define variables and set to empty values
@@ -15,10 +15,12 @@
 	   $formInfo["date_created"] = trim($_POST["date_created"]);
 	   $formInfo["last_update"] = trim($_POST["last_update"]);
 	   $formInfo["sold"] = trim($_POST["sold"]);
-	   $formInfo["is_free"] = trim($_POST["is_free"]);
+	   $formInfo["is_free"] = trim($_POST["is_free"]) == "on" ? 1:0;
 	   $formInfo["price"] = trim($_POST["price"]);
 	   $formInfo["description"] = trim($_POST["description"]);
 	   $formInfo["condition"] = trim($_POST["condition"]);
+
+	   $userInfo = retrieve_info("user", $formInfo['id_user'])->fetch_array(MYSQLI_BOTH);
 	  
 	}
 

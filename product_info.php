@@ -28,8 +28,8 @@
 		<h4>Item description</h4>
 		<div><?php echo $formInfo["description"] ?></div>
 		<h4>Seller Information</h4>
-		<div>Seller name</div>
-		<div><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Seller email</div>
-		<div> <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span> Seller phone number</div>
+		<div><?php echo $userInfo['name'] ?></div>
+		<div><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> <?php echo $userInfo['email'] ?> </div>
+		<div> <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span> <?php echo $userInfo['phone_number'] ?></div>
 	</div>
 </div>

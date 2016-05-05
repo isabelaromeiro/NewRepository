@@ -4,9 +4,6 @@
 
 		<div class="col-md-3 list-group">
 			<h3>Categories</h3>
-			<a href="#" class="list-group-item active">
-				Cras justo odio
-			</a>
 			<?php 
 				$categories = retrieve_info("category");
 
