@@ -122,7 +122,7 @@ function insert_product($POST){
 	} else {
 			
 		$id_user 	=	mysqli_real_escape_string($conn, $POST['id_user']);	
-		$id_user 		=	1;	
+		$id_user 		=	get_id();	
 		$id_category 	=	mysqli_real_escape_string($conn, $POST['category']);	
 		$title 			=	mysqli_real_escape_string($conn, $POST['title']);	
 		$date_created 	=	date("Y-m-d");
@@ -175,27 +175,6 @@ function products($list){
 
 		$productCodeSoFar = $productCodeSoFar .  "</div></div></div>";
 
-
-		// echo "<p>" .  $row['description'] . "</p>";
-
-		// echo "<a href='/productPage.php?id=" . $row["id_product"] ."'> <div class='product'>
-		// 	<div class='img'>";
-		// echo "<img class='productImage' src='" . ."' alt='" . $row['name'] . "'/>";
-			
-		// echo "</div><div class='left'><ul>";
-
-		// echo "<li>" . $row['category'] . "</li>";
-
-		// echo "</ul></div>";
-
-		
-
-		// echo "<div class='right'><ul>";
-		// echo "<li class='top'>" . $price . "</li>";
-		// echo "<li>" . $row['date_created'] . "</li></ul></div></div></a>";
-
-
-		// We could also use $row[0], $row[1], $row[2] but it's preferred to use column-name when possible.
 	}
 
 	return $productCodeSoFar;
@@ -227,6 +206,21 @@ function get_all_products($id_product=NULL){
 	// 	return $allRows;
 	// }
 		
+}
+
+function get_my_products($id_user){
+	$conn = mysqli_connect(SERVERNAME, USERNAME, PASSWORD, DBNAME);
+	
+	if ($conn->connect_error) {
+	    echo "Sorry, this website is experiencing problems.";
+	    exit;
+	}
+
+	$query = "SELECT * FROM (user natural join product) inner join image on product.id_image=image.id_image WHERE id_user = '$id_user'";
+
+	$allRows = mysqli_query($conn, $query);
+	$conn->close();
+	return $allRows;		
 }
 
 function stringErrorMessage($string,$required){

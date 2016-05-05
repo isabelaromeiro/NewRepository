@@ -59,20 +59,15 @@
     function search_result ($search_term) {
         $conn = connect();
 
-        $result = mysqli_query($conn, "SELECT * FROM `product`, `image`, `category`
-                                        WHERE (`title` LIKE '%$search_term%'
-                                        OR `category` LIKE '%$search_term%')
-                                        AND `product`.`id_category` = `category`.`id_category`
-                                        AND `product`.`id_image` = `image`.`id_image`");
-        if (!$result) {
-            echo 'Could not run query: ' . mysql_error();
-            exit;
-        }
-
-
-        while ($row = mysqli_fetch_array($result)) {
-            echo $row['title'] . "<br/>";
-        }
+        $query = "SELECT * FROM `product`, `image`, `category`
+                WHERE (`title` LIKE '%$search_term%'
+                OR `category` LIKE '%$search_term%')
+                AND `product`.`id_category` = `category`.`id_category`
+                AND `product`.`id_image` = `image`.`id_image`";
+       
+        $allRows = mysqli_query($conn, $query);
+        $conn->close();
+        return $allRows;
 
     }
 

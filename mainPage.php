@@ -11,16 +11,10 @@
 				$categories = retrieve_info("category");
 
 				while ($row = mysqli_fetch_array($categories)) {
-					echo "<a href='search.php?category=" . $row['category'] ."' class='list-group-item'>" . $row['category'] ." </a>";
+					echo "<a href='search-handler.php?category=" . $row['category'] ."' class='list-group-item'>" . $row['category'] ." </a>";
 
 				}
 			 ?>
-			
-			<!-- <a href="#" class="list-group-item">Books</a>
-			<a href="#" class="list-group-item">Electronics</a>
-			<a href="#" class="list-group-item">Furniture</a>
-			<a href="#" class="list-group-item">Games</a>
-			<a href="#" class="list-group-item">Home & Kitchen</a> -->
 
 		</div>
 
